@@ -174,6 +174,8 @@ pub enum AttachmentTypeEnum {
   IMAGE,
   VIDEO,
   AUDIO,
+  BINARY,
+  COMPRESSION,
 }
 impl Default for AttachmentTypeEnum {
   fn default() -> Self {
@@ -194,6 +196,8 @@ impl ToSql<Attachmenttype, diesel::pg::Pg> for AttachmentTypeEnum {
       AttachmentTypeEnum::IMAGE => "IMAGE",
       AttachmentTypeEnum::VIDEO => "VIDEO",
       AttachmentTypeEnum::AUDIO => "AUDIO",
+      AttachmentTypeEnum::BINARY => "BINARY",
+      AttachmentTypeEnum::COMPRESSION => "COMPRESSION",
     };
     out.write_all(status_str.as_bytes())?;
     Ok(serialize::IsNull::No)
@@ -207,6 +211,8 @@ impl FromSql<Attachmenttype, diesel::pg::Pg> for AttachmentTypeEnum {
       b"IMAGE" => Ok(AttachmentTypeEnum::IMAGE),
       b"VIDEO" => Ok(AttachmentTypeEnum::VIDEO),
       b"AUDIO" => Ok(AttachmentTypeEnum::AUDIO),
+      b"BINARY" => Ok(AttachmentTypeEnum::BINARY),
+      b"COMPRESSION" => Ok(AttachmentTypeEnum::COMPRESSION),
       _ => Err("Unrecognized enum variant".into()),
     }
   }
