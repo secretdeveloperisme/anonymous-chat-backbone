@@ -165,13 +165,20 @@ impl FromSql<Messagestatustype, diesel::pg::Pg> for MessageStatus {
 }
 
 // Custom AttachmentType type
-#[derive(Debug, PartialEq, FromSqlRow, AsExpression, Eq, Serialize, Deserialize)]
+#[derive(
+  Debug, PartialEq, FromSqlRow, AsExpression, Eq, Serialize, Deserialize, ToSchema, Clone,
+)]
 #[diesel(sql_type = crate::database::schema::sql_types::Attachmenttype)]
 pub enum AttachmentTypeEnum {
   TEXT,
   IMAGE,
   VIDEO,
   AUDIO,
+}
+impl Default for AttachmentTypeEnum {
+  fn default() -> Self {
+    Self::TEXT
+  }
 }
 
 impl AttachmentTypeEnum {
@@ -227,7 +234,7 @@ pub struct Message {
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct NewMessage<'a> {
   pub message_uuid: Uuid,
-  pub content: Option<&'a str>,
+  pub content: Option<&'a String>,
   pub message_type: MessageTypeEnum,
   pub status: MessageStatus,
   pub created_at: NaiveDateTime,
@@ -235,7 +242,7 @@ pub struct NewMessage<'a> {
   pub group_id: i32,
 }
 
-#[derive(Queryable, Identifiable, Associations, Debug)]
+#[derive(Queryable, Selectable, Identifiable, Associations, Debug, Clone)]
 #[diesel(belongs_to(Message))]
 #[diesel(table_name = crate::database::schema::attachments)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
