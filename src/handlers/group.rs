@@ -155,6 +155,7 @@ pub async fn create_user_and_group(
     group_id: group.id,
     group_name: group.name,
     group_code: group.group_code,
+    approval_require: group.approval_require.unwrap_or(false),
     expired_at: group.expired_at.unwrap().and_utc().to_string(),
     is_waiting: false,
   };
@@ -232,6 +233,7 @@ pub async fn create_user_and_group_v1(
             group_id: group_result.id,
             group_name: group_result.name,
             group_code: group_result.group_code,
+            approval_require: group_result.approval_require.unwrap_or(false),
             expired_at: group_result.expired_at.unwrap().and_utc().to_string(),
             is_waiting: false,
         };
@@ -385,6 +387,7 @@ pub async fn join_group(
     group_id: group.id,
     group_name: group.name,
     group_code: group.group_code,
+    approval_require: group.approval_require.unwrap_or_default(),
     expired_at: group.expired_at.unwrap().and_utc().to_string(),
     is_waiting,
   };

@@ -29,6 +29,7 @@ pub struct GroupResult {
   pub group_name: String,
   pub group_code: String,
   pub expired_at: String,
+  pub approval_require: bool,
   pub is_waiting: bool,
 }
 #[derive(Deserialize)]

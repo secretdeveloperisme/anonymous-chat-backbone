@@ -120,6 +120,7 @@ impl From<Message> for MessageResponse {
 
 // Full response structure containing a list of messages
 #[derive(Serialize)]
+#[allow(dead_code)]
 pub struct GetMessagesResponse {
   pub messages: Vec<MessageResponse>,
 }
